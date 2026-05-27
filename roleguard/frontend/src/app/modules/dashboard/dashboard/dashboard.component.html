@@ -1,0 +1,141 @@
+<!-- src/app/modules/dashboard/dashboard/dashboard.component.html -->
+<div class="dashboard">
+
+  <!-- Header -->
+  <div class="page-header">
+    <div>
+      <h1>Dashboard</h1>
+      <p class="page-sub">Welcome back, <strong>{{ currentUser?.firstName }}</strong></p>
+    </div>
+    <div class="header-actions">
+      <!-- Async delay demo controls -->
+      <div class="delay-controls">
+        <span class="delay-label">Simulate API delay:</span>
+        <button class="delay-btn" (click)="refreshWithDelay(0)">No delay</button>
+        <button class="delay-btn" (click)="refreshWithDelay(1500)">1.5s</button>
+        <button class="delay-btn" (click)="refreshWithDelay(3000)">3s</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- User profile card -->
+  <div class="profile-card">
+    <div class="profile-avatar">{{ currentUser?.avatar }}</div>
+    <div class="profile-info">
+      <h3>{{ currentUser?.firstName }} {{ currentUser?.lastName }}</h3>
+      <p>{{ currentUser?.email }}</p>
+      <div class="profile-meta">
+        <span class="badge" [class.badge--admin]="currentUser?.role === 'admin'" [class.badge--user]="currentUser?.role === 'user'">
+          {{ currentUser?.role === 'admin' ? 'Admin' : 'General User' }}
+        </span>
+        <span class="meta-item">{{ currentUser?.department }}</span>
+        <span class="meta-item">Joined {{ currentUser?.joinedAt | date:'mediumDate' }}</span>
+      </div>
+    </div>
+    <div class="profile-access">
+      <div class="access-note">
+        <span class="access-icon">{{ currentUser?.role === 'admin' ? '🔓' : '🔒' }}</span>
+        <span>{{ currentUser?.role === 'admin' ? 'Full access — all records visible' : 'Restricted — public records only' }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats row -->
+  <div class="stats-row">
+    <div class="stat-card">
+      <span class="stat-value">{{ totalRecords }}</span>
+      <span class="stat-label">Total Records</span>
+    </div>
+    <div class="stat-card stat-card--green">
+      <span class="stat-value">{{ completedCount }}</span>
+      <span class="stat-label">Completed</span>
+    </div>
+    <div class="stat-card stat-card--blue">
+      <span class="stat-value">{{ inProgressCount }}</span>
+      <span class="stat-label">In Progress</span>
+    </div>
+    <div class="stat-card stat-card--purple" *ngIf="currentUser?.role === 'admin'">
+      <span class="stat-value">{{ restrictedCount }}</span>
+      <span class="stat-label">Admin-only</span>
+    </div>
+  </div>
+
+  <!-- Access note banner -->
+  <div class="access-banner" *ngIf="accessNote">
+    <span>ℹ️ {{ accessNote }}</span>
+  </div>
+
+  <!-- Async loading indicator -->
+  <div class="loading-bar" *ngIf="loadingRecords">
+    <div class="loading-bar__fill"></div>
+    <span *ngIf="delayMs > 0">Loading with {{ delayMs }}ms simulated delay...</span>
+    <span *ngIf="delayMs === 0">Loading records...</span>
+  </div>
+
+  <!-- Error -->
+  <div class="alert-error" *ngIf="error">{{ error }}</div>
+
+  <!-- Records table -->
+  <div class="table-card" *ngIf="!loadingRecords && records.length > 0">
+    <div class="table-header">
+      <h3>Records <span class="count-badge">{{ records.length }}</span></h3>
+    </div>
+    <div class="table-wrap">
+      <table mat-table [dataSource]="records" class="records-table">
+
+        <ng-container matColumnDef="title">
+          <th mat-header-cell *matHeaderCellDef>Title</th>
+          <td mat-cell *matCellDef="let r">
+            <div class="record-title">{{ r.title }}</div>
+            <div class="record-desc">{{ r.description }}</div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="category">
+          <th mat-header-cell *matHeaderCellDef>Category</th>
+          <td mat-cell *matCellDef="let r">
+            <span class="category-tag">{{ r.category }}</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>Status</th>
+          <td mat-cell *matCellDef="let r">
+            <span class="badge" [ngClass]="statusClass(r.status)">{{ r.status }}</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="priority">
+          <th mat-header-cell *matHeaderCellDef>Priority</th>
+          <td mat-cell *matCellDef="let r">
+            <span class="badge" [ngClass]="priorityClass(r.priority)">{{ r.priority }}</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="assignedTo">
+          <th mat-header-cell *matHeaderCellDef>Assigned To</th>
+          <td mat-cell *matCellDef="let r">{{ r.assignedTo }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="accessLevel">
+          <th mat-header-cell *matHeaderCellDef>Access</th>
+          <td mat-cell *matCellDef="let r">
+            <span class="access-chip" [class.access-chip--admin]="r.accessLevel === 'admin'">
+              {{ r.accessLevel === 'admin' ? '🔐 Admin only' : '🌐 Public' }}
+            </span>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- Empty state -->
+  <div class="empty-state" *ngIf="!loadingRecords && records.length === 0 && !error">
+    <span>📭</span>
+    <p>No records found.</p>
+  </div>
+
+</div>

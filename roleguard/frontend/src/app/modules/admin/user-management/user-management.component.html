@@ -1,0 +1,162 @@
+<!-- src/app/modules/admin/user-management/user-management.component.html -->
+<div class="admin-page">
+
+  <div class="page-header">
+    <div>
+      <h1>User Management</h1>
+      <p class="page-sub">Manage all platform users and their roles</p>
+    </div>
+    <button class="btn-primary" (click)="openCreate()">+ Add User</button>
+  </div>
+
+  <!-- Inline create/edit form -->
+  <div class="form-panel" *ngIf="showForm">
+    <div class="form-panel__header">
+      <h3>{{ editingUser ? 'Edit User' : 'New User' }}</h3>
+      <button class="close-btn" (click)="closeForm()">✕</button>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="saveUser()" novalidate>
+      <div class="form-grid">
+
+        <div class="field">
+          <label>First name</label>
+          <input type="text" formControlName="firstName" placeholder="First name"
+            [class.is-error]="f['firstName'].invalid && f['firstName'].touched" />
+          <span class="field-error" *ngIf="f['firstName'].errors?.['required'] && f['firstName'].touched">Required</span>
+        </div>
+
+        <div class="field">
+          <label>Last name</label>
+          <input type="text" formControlName="lastName" placeholder="Last name"
+            [class.is-error]="f['lastName'].invalid && f['lastName'].touched" />
+          <span class="field-error" *ngIf="f['lastName'].errors?.['required'] && f['lastName'].touched">Required</span>
+        </div>
+
+        <div class="field">
+          <label>User ID</label>
+          <input type="text" formControlName="userId" placeholder="Unique login ID"
+            [class.is-error]="f['userId'].invalid && f['userId'].touched" />
+          <span class="field-error" *ngIf="f['userId'].errors?.['required'] && f['userId'].touched">Required</span>
+        </div>
+
+        <div class="field">
+          <label>Email</label>
+          <input type="email" formControlName="email" placeholder="Email address"
+            [class.is-error]="f['email'].invalid && f['email'].touched" />
+          <span class="field-error" *ngIf="f['email'].errors?.['required'] && f['email'].touched">Required</span>
+          <span class="field-error" *ngIf="f['email'].errors?.['email'] && f['email'].touched">Invalid email</span>
+        </div>
+
+        <div class="field">
+          <label>Password {{ editingUser ? '(leave blank to keep)' : '' }}</label>
+          <input type="password" formControlName="password" placeholder="••••••••"
+            [class.is-error]="f['password'].invalid && f['password'].touched" />
+          <span class="field-error" *ngIf="f['password'].errors?.['required'] && f['password'].touched">Required</span>
+        </div>
+
+        <div class="field">
+          <label>Role</label>
+          <select formControlName="role">
+            <option value="user">General User</option>
+            <option value="admin">Admin</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Department</label>
+          <input type="text" formControlName="department" placeholder="e.g. Engineering" />
+        </div>
+
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn-secondary" (click)="closeForm()">Cancel</button>
+        <button type="submit" class="btn-primary" [disabled]="saving">
+          {{ saving ? 'Saving...' : (editingUser ? 'Update User' : 'Create User') }}
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Error -->
+  <div class="alert-error" *ngIf="error">{{ error }}</div>
+
+  <!-- Loading -->
+  <div class="loading-state" *ngIf="loading">
+    <div class="spinner"></div>
+    <span>Loading users...</span>
+  </div>
+
+  <!-- Users table -->
+  <div class="table-card" *ngIf="!loading">
+    <table mat-table [dataSource]="users" class="users-table">
+
+      <ng-container matColumnDef="avatar">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let u">
+          <div class="avatar" [class.avatar--admin]="u.role === 'admin'">{{ u.avatar }}</div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let u">
+          <div class="user-name">{{ u.firstName }} {{ u.lastName }}
+            <span class="you-tag" *ngIf="isCurrentUser(u)">You</span>
+          </div>
+          <div class="user-email">{{ u.email }}</div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="userId">
+        <th mat-header-cell *matHeaderCellDef>User ID</th>
+        <td mat-cell *matCellDef="let u"><code>{{ u.userId }}</code></td>
+      </ng-container>
+
+      <ng-container matColumnDef="role">
+        <th mat-header-cell *matHeaderCellDef>Role</th>
+        <td mat-cell *matCellDef="let u">
+          <span class="badge" [class.badge--admin]="u.role === 'admin'" [class.badge--user]="u.role === 'user'">
+            {{ u.role === 'admin' ? 'Admin' : 'General User' }}
+          </span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="department">
+        <th mat-header-cell *matHeaderCellDef>Department</th>
+        <td mat-cell *matCellDef="let u">{{ u.department }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef>Status</th>
+        <td mat-cell *matCellDef="let u">
+          <button class="status-toggle"
+            [class.status-toggle--active]="u.active"
+            [class.status-toggle--inactive]="!u.active"
+            (click)="toggleActive(u)"
+            [disabled]="isCurrentUser(u)">
+            {{ u.active ? 'Active' : 'Inactive' }}
+          </button>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let u">
+          <div class="action-btns">
+            <button class="icon-btn icon-btn--edit" (click)="openEdit(u)" title="Edit">✏️</button>
+            <button class="icon-btn icon-btn--delete"
+              (click)="deleteUser(u)"
+              [disabled]="isCurrentUser(u)"
+              title="Delete">🗑️</button>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+
+</div>

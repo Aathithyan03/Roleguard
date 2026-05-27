@@ -1,0 +1,109 @@
+<!-- src/app/modules/auth/login/login.component.html -->
+<div class="login-page">
+  <div class="login-left">
+    <div class="brand">
+      <span class="brand-icon">⬡</span>
+      <span class="brand-name">RoleGuard</span>
+    </div>
+    <div class="tagline">
+      <h1>Secure.<br/>Role-aware.<br/>Instant.</h1>
+      <p>Enterprise access control built for modern teams. Every user sees exactly what they should.</p>
+    </div>
+    <div class="features">
+      <div class="feature-item">
+        <span class="dot dot--green"></span>
+        JWT-based authentication
+      </div>
+      <div class="feature-item">
+        <span class="dot dot--blue"></span>
+        Role-based access control
+      </div>
+      <div class="feature-item">
+        <span class="dot dot--purple"></span>
+        Async-first API design
+      </div>
+    </div>
+  </div>
+
+  <div class="login-right">
+    <div class="login-card">
+      <h2>Welcome back</h2>
+      <p class="subtitle">Sign in to your account</p>
+
+      <!-- Demo credential pills -->
+      <div class="demo-pills">
+        <span class="demo-label">Quick fill:</span>
+        <button
+          *ngFor="let cred of demoCredentials"
+          type="button"
+          class="pill"
+          [class.pill--admin]="cred.label === 'Admin'"
+          (click)="fillDemo(cred)">
+          {{ cred.label }}
+        </button>
+      </div>
+
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+
+        <!-- User ID -->
+        <div class="field">
+          <label for="userId">User ID</label>
+          <input
+            id="userId"
+            type="text"
+            formControlName="userId"
+            placeholder="e.g. admin"
+            autocomplete="username"
+            [class.is-error]="userId?.invalid && userId?.touched" />
+          <span class="field-error" *ngIf="userId?.errors?.['required'] && userId?.touched">
+            User ID is required
+          </span>
+          <span class="field-error" *ngIf="userId?.errors?.['minlength'] && userId?.touched">
+            Minimum 3 characters
+          </span>
+        </div>
+
+        <!-- Password -->
+        <div class="field">
+          <label for="password">Password</label>
+          <div class="input-wrap">
+            <input
+              id="password"
+              [type]="showPassword ? 'text' : 'password'"
+              formControlName="password"
+              placeholder="••••••••"
+              autocomplete="current-password"
+              [class.is-error]="password?.invalid && password?.touched" />
+            <button type="button" class="toggle-pw" (click)="showPassword = !showPassword">
+              {{ showPassword ? 'Hide' : 'Show' }}
+            </button>
+          </div>
+          <span class="field-error" *ngIf="password?.errors?.['required'] && password?.touched">
+            Password is required
+          </span>
+        </div>
+
+        <!-- Role info banner -->
+        <div class="role-info">
+          <strong>Roles available:</strong>
+          <span class="badge badge--admin">Admin</span> Full access + user management
+          &nbsp;|&nbsp;
+          <span class="badge badge--user">General User</span> View own records only
+        </div>
+
+        <!-- API error -->
+        <div class="alert-error" *ngIf="error">
+          {{ error }}
+        </div>
+
+        <button type="submit" class="btn-submit" [disabled]="loading">
+          <span *ngIf="!loading">Sign in</span>
+          <span *ngIf="loading" class="spinner-inline"></span>
+        </button>
+
+      </form>
+
+      <p class="hint">Demo password for all accounts: <code>password123</code></p>
+    </div>
+  </div>
+</div>

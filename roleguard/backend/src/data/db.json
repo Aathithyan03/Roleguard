@@ -1,0 +1,124 @@
+{
+  "users": [
+    {
+      "id": "usr_001",
+      "userId": "Aathithyan_admin",
+      "email": "aathithyanv03@roleguard.dev",
+      "password": "$2a$10$irtYJv5ypru7etPBZK9GveMKW9Rb1APQVVE9fuj3XaJPr8wbqe..C",
+      "role": "admin",
+      "firstName": "Aathithyan",
+      "lastName": "V",
+      "department": "Platform Engineering",
+      "joinedAt": "2022-01-15T08:00:00.000Z",
+      "avatar": "AM",
+      "active": true
+    },
+    {
+      "id": "usr_002",
+      "userId": "Arun",
+      "email": "arun22@roleguard.dev",
+      "password": "$2a$10$irtYJv5ypru7etPBZK9GveMKW9Rb1APQVVE9fuj3XaJPr8wbqe..C",
+      "role": "user",
+      "firstName": "Arun",
+      "lastName": "Kumar",
+      "department": "Product",
+      "joinedAt": "2023-03-10T08:00:00.000Z",
+      "avatar": "PS",
+      "active": true
+    },
+    {
+      "id": "usr_003",
+      "userId": "rohan",
+      "email": "rohan@roleguard.dev",
+      "password": "$2a$10$irtYJv5ypru7etPBZK9GveMKW9Rb1APQVVE9fuj3XaJPr8wbqe..C",
+      "role": "user",
+      "firstName": "Rohan",
+      "lastName": "S",
+      "department": "Design",
+      "joinedAt": "2023-06-20T08:00:00.000Z",
+      "avatar": "RV",
+      "active": true
+    },
+    {
+      "id": "usr_004",
+      "userId": "divya",
+      "email": "divya@roleguard.dev",
+      "password": "$2a$10$irtYJv5ypru7etPBZK9GveMKW9Rb1APQVVE9fuj3XaJPr8wbqe..C",
+      "role": "user",
+      "firstName": "Divya",
+      "lastName": "R",
+      "department": "QA",
+      "joinedAt": "2024-01-05T08:00:00.000Z",
+      "avatar": "DN",
+      "active": false
+    }
+  ],
+  "records": [
+    {
+      "id": "rec_001",
+      "title": "Q1 Platform Metrics",
+      "description": "Monthly uptime, error rates, and throughput for all microservices.",
+      "category": "Analytics",
+      "status": "completed",
+      "priority": "high",
+      "assignedTo": "admin",
+      "createdAt": "2024-03-01T10:00:00.000Z",
+      "accessLevel": "all"
+    },
+    {
+      "id": "rec_002",
+      "title": "User Onboarding Flow v2",
+      "description": "Redesigned onboarding with progressive disclosure and role-based steps.",
+      "category": "Product",
+      "status": "in-progress",
+      "priority": "medium",
+      "assignedTo": "priya",
+      "createdAt": "2024-04-15T09:00:00.000Z",
+      "accessLevel": "all"
+    },
+    {
+      "id": "rec_003",
+      "title": "Security Audit Report",
+      "description": "Penetration testing results and remediation plan. Confidential.",
+      "category": "Security",
+      "status": "review",
+      "priority": "critical",
+      "assignedTo": "admin",
+      "createdAt": "2024-05-01T12:00:00.000Z",
+      "accessLevel": "admin"
+    },
+    {
+      "id": "rec_004",
+      "title": "Design System Tokens",
+      "description": "Figma-to-code token export for dark mode and responsive breakpoints.",
+      "category": "Design",
+      "status": "completed",
+      "priority": "low",
+      "assignedTo": "rohan",
+      "createdAt": "2024-05-10T14:30:00.000Z",
+      "accessLevel": "all"
+    },
+    {
+      "id": "rec_005",
+      "title": "Database Migration Plan",
+      "description": "Zero-downtime migration strategy from RDS to Aurora Serverless v2.",
+      "category": "Infrastructure",
+      "status": "in-progress",
+      "priority": "high",
+      "assignedTo": "admin",
+      "createdAt": "2024-05-20T08:00:00.000Z",
+      "accessLevel": "admin"
+    },
+    {
+      "id": "rec_006",
+      "title": "Test Coverage Report",
+      "description": "Unit and integration test coverage breakdown across all feature modules.",
+      "category": "QA",
+      "status": "completed",
+      "priority": "medium",
+      "assignedTo": "divya",
+      "createdAt": "2024-06-01T11:00:00.000Z",
+      "accessLevel": "all"
+    }
+  ]
+}

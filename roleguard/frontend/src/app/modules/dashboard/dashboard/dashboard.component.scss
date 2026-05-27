@@ -1,0 +1,310 @@
+// src/app/modules/dashboard/dashboard/dashboard.component.scss
+
+.dashboard {
+  padding: 2rem;
+  max-width: 1100px;
+  font-family: 'DM Sans', sans-serif;
+}
+
+// ── Header ───────────────────────────────────────────────────────────────────
+.page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+
+  h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #0f0f1a;
+    margin: 0 0 2px;
+  }
+  .page-sub {
+    color: #888;
+    font-size: 0.9rem;
+    margin: 0;
+  }
+}
+
+.delay-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.delay-label {
+  font-size: 0.8rem;
+  color: #888;
+}
+.delay-btn {
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 8px;
+  border: 1.5px solid #e0e0e8;
+  background: #fff;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: inherit;
+  color: #444;
+
+  &:hover { border-color: #7c6dfa; color: #7c6dfa; }
+}
+
+// ── Profile card ──────────────────────────────────────────────────────────────
+.profile-card {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  background: #fff;
+  border: 1px solid #e8e8f0;
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.profile-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #0f0f1a;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.profile-info {
+  flex: 1;
+  min-width: 200px;
+
+  h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #0f0f1a;
+    margin: 0 0 4px;
+  }
+  p {
+    font-size: 0.85rem;
+    color: #888;
+    margin: 0 0 10px;
+  }
+}
+
+.profile-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.meta-item {
+  font-size: 0.8rem;
+  color: #666;
+  background: #f4f4f8;
+  padding: 3px 10px;
+  border-radius: 6px;
+}
+
+.profile-access {
+  margin-left: auto;
+}
+.access-note {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  color: #555;
+  background: #f8f8fc;
+  padding: 8px 14px;
+  border-radius: 10px;
+  border: 1px solid #e8e8f0;
+}
+
+// ── Stats ─────────────────────────────────────────────────────────────────────
+.stats-row {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.stat-card {
+  flex: 1;
+  min-width: 120px;
+  background: #fff;
+  border: 1px solid #e8e8f0;
+  border-radius: 14px;
+  padding: 1.2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+
+  .stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #0f0f1a;
+  }
+  .stat-label {
+    font-size: 0.78rem;
+    color: #888;
+    margin-top: 2px;
+  }
+
+  &--green  { border-left: 4px solid #34d399; }
+  &--blue   { border-left: 4px solid #60a5fa; }
+  &--purple { border-left: 4px solid #a78bfa; }
+}
+
+// ── Access banner ─────────────────────────────────────────────────────────────
+.access-banner {
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 10px;
+  padding: 10px 16px;
+  font-size: 0.85rem;
+  color: #1d4ed8;
+  margin-bottom: 1.2rem;
+}
+
+// ── Loading bar ───────────────────────────────────────────────────────────────
+.loading-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 1rem;
+  font-size: 0.82rem;
+  color: #7c6dfa;
+
+  &__fill {
+    height: 4px;
+    width: 200px;
+    background: #e8e8f8;
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: -60%;
+      top: 0;
+      height: 100%;
+      width: 60%;
+      background: #7c6dfa;
+      border-radius: 4px;
+      animation: slide 1s ease-in-out infinite;
+    }
+  }
+}
+
+@keyframes slide {
+  to { left: 100%; }
+}
+
+// ── Table card ────────────────────────────────────────────────────────────────
+.table-card {
+  background: #fff;
+  border: 1px solid #e8e8f0;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.table-header {
+  padding: 1.2rem 1.5rem;
+  border-bottom: 1px solid #f0f0f8;
+
+  h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #0f0f1a;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+}
+
+.count-badge {
+  background: #f0eeff;
+  color: #7c6dfa;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 20px;
+}
+
+.table-wrap { overflow-x: auto; }
+
+.records-table {
+  width: 100%;
+
+  th { font-size: 0.78rem; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: 0.5px; }
+  td { font-size: 0.88rem; color: #333; }
+
+  tr:last-child td { border-bottom: none; }
+}
+
+.record-title { font-weight: 600; color: #0f0f1a; font-size: 0.88rem; }
+.record-desc  { font-size: 0.78rem; color: #aaa; margin-top: 2px; max-width: 280px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.category-tag {
+  background: #f4f4f8;
+  color: #555;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 6px;
+}
+
+// ── Badges ────────────────────────────────────────────────────────────────────
+.badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 6px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  text-transform: capitalize;
+
+  &--green  { background: #d1fae5; color: #065f46; }
+  &--blue   { background: #dbeafe; color: #1e40af; }
+  &--amber  { background: #fef3c7; color: #92400e; }
+  &--gray   { background: #f3f4f6; color: #6b7280; }
+  &--red    { background: #fee2e2; color: #991b1b; }
+  &--orange { background: #ffedd5; color: #9a3412; }
+  &--admin  { background: #7c6dfa; color: #fff; }
+  &--user   { background: #e0e0f0; color: #555; }
+}
+
+.access-chip {
+  font-size: 0.75rem;
+  color: #555;
+
+  &--admin { color: #7c6dfa; font-weight: 600; }
+}
+
+// ── Alert / empty ─────────────────────────────────────────────────────────────
+.alert-error {
+  background: #fef2f2;
+  border: 1px solid #fca5a5;
+  border-radius: 10px;
+  color: #dc2626;
+  font-size: 0.85rem;
+  padding: 10px 14px;
+  margin-bottom: 1rem;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 4rem;
+  color: #aaa;
+  font-size: 0.9rem;
+
+  span { font-size: 2.5rem; display: block; margin-bottom: 1rem; }
+}
